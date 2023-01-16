@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
      */
     public float speed = 12f;
     Vector3 activeMoveSpeed;
+    public Vector3 ActiveMoveSpeed { get { return activeMoveSpeed; } }
     public float acceleration = 2f;
     public float gravity = -10f;
     public float jumpGrav = -5f;
@@ -44,8 +45,6 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        bool jumpPressed = false;
-
         var delta = movementVector.action.ReadValue<Vector2>();
 
         Vector3 moveInput = (
@@ -83,8 +82,8 @@ public class PlayerMovement : MonoBehaviour
         {
             if (isGrounded)
             {
-                //vertVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-                vertVelocity.y = jumpHeight;
+                vertVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+                //vertVelocity.y = jumpHeight;
             }
             //velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }

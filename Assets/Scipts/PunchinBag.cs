@@ -2,10 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PunchinBag : MonoBehaviour, IDamageable
+public class PunchinBag : MonoBehaviour, IDamageable, ILaunchable
 {
+    /*
+     * IDamagable
+     */
     ParticleSystem ps;
     public float Health => 10;
+
+    /*
+     * ILaunchable
+     */
+    public Rigidbody Rigidbody => GetComponent<Rigidbody>();
+
+    [SerializeField]
+    public float Mass { get; private set; }   
+
+    public bool IsBeingLaunched => throw new System.NotImplementedException();
 
     public void TakeDamage()
     {
@@ -28,13 +41,13 @@ public class PunchinBag : MonoBehaviour, IDamageable
         ps.Play();
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.transform.tag == "PlayerHitBox")
-        {
-            TakeDamage();
-        }
-    }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.transform.tag == "PlayerHitBox")
+    //    {
+    //        TakeDamage();
+    //    }
+    //}
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -42,5 +55,15 @@ public class PunchinBag : MonoBehaviour, IDamageable
         {
             TakeDamage();
         }
+    }
+
+    public void UpdateLaunchDirection()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void ApplyLaunchForce()
+    {
+        throw new System.NotImplementedException();
     }
 }

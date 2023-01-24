@@ -14,13 +14,6 @@ public class PlayerAttack : MonoBehaviour
     {
         anim = GetComponent<Animator>();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void OnFire(InputAction.CallbackContext callbackContext)
     {
         if (callbackContext.started && anim.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
@@ -28,14 +21,13 @@ public class PlayerAttack : MonoBehaviour
             Debug.Log("punched!!");
             if (rightOrLeft)
             {
-                anim.Play("RightPunch");
-                rightOrLeft = !rightOrLeft;
+                anim.Play("RightPunch");          
             }
             else
             {
                 anim.Play("LeftPunch");
-                rightOrLeft = !rightOrLeft;
             }
+            rightOrLeft = !rightOrLeft;
         }
     }
 }

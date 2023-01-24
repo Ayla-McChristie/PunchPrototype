@@ -77,7 +77,7 @@ public class PlayerMovement : MonoBehaviour
 
     }
     public void OnJump(InputAction.CallbackContext callbackContext)
-    {
+    {     
         if (callbackContext.performed && gameObject.scene.IsValid())
         {
             if (isGrounded)

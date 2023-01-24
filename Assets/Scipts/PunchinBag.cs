@@ -14,11 +14,18 @@ public class PunchinBag : MonoBehaviour, IDamageable, ILaunchable
      * ILaunchable
      */
     public Rigidbody Rigidbody => GetComponent<Rigidbody>();
-
     [SerializeField]
     public float Mass { get; private set; }   
+    public bool IsBeingLaunched { get; private set; }
+    public Vector3 ActiveVelocity { get; private set; }
 
-    public bool IsBeingLaunched => throw new System.NotImplementedException();
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.transform.tag == "PlayerHitBox")
+        {
+            TakeDamage();
+        }
+    }
 
     public void TakeDamage()
     {
@@ -41,21 +48,6 @@ public class PunchinBag : MonoBehaviour, IDamageable, ILaunchable
         ps.Play();
     }
 
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.transform.tag == "PlayerHitBox")
-    //    {
-    //        TakeDamage();
-    //    }
-    //}
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.transform.tag == "PlayerHitBox")
-        {
-            TakeDamage();
-        }
-    }
 
     public void UpdateLaunchDirection()
     {

@@ -7,6 +7,7 @@ public interface ILaunchable
     public Rigidbody Rigidbody { get; }
     public float Mass { get; }
     public bool IsBeingLaunched { get; }
+    public Vector3 ActiveVelocity { get; }
     public void UpdateLaunchDirection();
     public void ApplyLaunchForce();
 }

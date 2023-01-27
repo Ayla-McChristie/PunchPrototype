@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class PunchinBag : MonoBehaviour, IDamageable, ILaunchable
 {
+    bool isGrounded = false;
+    public Transform jawnCheck;
+    Vector3 groundCheckSize = new Vector3(.2f, .2f, .2f);
+    [SerializeField]
+    LayerMask groundMask;
+
     /*
      * IDamagable
      */
@@ -13,17 +19,44 @@ public class PunchinBag : MonoBehaviour, IDamageable, ILaunchable
     /*
      * ILaunchable
      */
-    public Rigidbody Rigidbody => GetComponent<Rigidbody>();
+    [SerializeField]
+    float gravity = 2;
+    [SerializeField]
+    float launchForceFallOff = 1;
     [SerializeField]
     public float Mass { get; private set; }   
     public bool IsBeingLaunched { get; private set; }
     public Vector3 ActiveVelocity { get; private set; }
 
+    public CharacterController CharCont => GetComponent<CharacterController>();
+
+    public void Update()
+    {
+        isGrounded = CharCont.isGrounded;
+
+        ApplyGravity(isGrounded);
+
+        CharCont.Move((ActiveVelocity) * Time.deltaTime);
+
+        ActiveVelocity = Vector3.Lerp(ActiveVelocity, Vector3.zero, launchForceFallOff * Time.deltaTime);
+    }
+    private void ApplyGravity(bool isOnGround)
+    {
+        if (isOnGround)
+        {
+            ActiveVelocity += new Vector3(0, -2, 0);
+        }
+        else
+        {
+            ActiveVelocity +=new Vector3(0, gravity * Time.deltaTime, 0);
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform.tag == "PlayerHitBox")
         {
-            TakeDamage();
+            //TakeDamage();
         }
     }
 
@@ -48,14 +81,13 @@ public class PunchinBag : MonoBehaviour, IDamageable, ILaunchable
         ps.Play();
     }
 
-
     public void UpdateLaunchDirection()
     {
         throw new System.NotImplementedException();
     }
 
-    public void ApplyLaunchForce()
+    public void ApplyLaunchForce(Vector3 angle, float magnitude)
     {
-        throw new System.NotImplementedException();
+        ActiveVelocity = angle.normalized * magnitude;
     }
 }

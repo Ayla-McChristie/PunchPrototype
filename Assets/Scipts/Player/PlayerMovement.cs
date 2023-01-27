@@ -55,7 +55,7 @@ public class PlayerMovement : MonoBehaviour
         activeMoveSpeed = Vector3.Lerp(activeMoveSpeed, moveInput * speed, acceleration * Time.deltaTime);
 
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-        Debug.Log("grounded: " + isGrounded);
+        //Debug.Log("grounded: " + isGrounded);
 
         if (isGrounded && vertVelocity.y < 0)
         {

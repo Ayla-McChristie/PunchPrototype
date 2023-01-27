@@ -106,6 +106,101 @@ AnimationClip:
     path: Hands/leftHand/Cube
     classID: 1
     script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 20
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: launchPower
+    path: Hands/leftHand/Cube
+    classID: 114
+    script: {fileID: 11500000, guid: 2496501012137cb4999ab5afc22d5f10, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: damage
+    path: Hands/leftHand/Cube
+    classID: 114
+    script: {fileID: 11500000, guid: 2496501012137cb4999ab5afc22d5f10, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: launchAngle.z
+    path: Hands/leftHand/Cube
+    classID: 114
+    script: {fileID: 11500000, guid: 2496501012137cb4999ab5afc22d5f10, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 2
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: launchAngle.y
+    path: Hands/leftHand/Cube
+    classID: 114
+    script: {fileID: 11500000, guid: 2496501012137cb4999ab5afc22d5f10, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: launchAngle.x
+    path: Hands/leftHand/Cube
+    classID: 114
+    script: {fileID: 11500000, guid: 2496501012137cb4999ab5afc22d5f10, type: 3}
   m_PPtrCurves: []
   m_SampleRate: 60
   m_WrapMode: 0
@@ -126,6 +221,41 @@ AnimationClip:
       attribute: 2086281974
       script: {fileID: 0}
       typeID: 1
+      customType: 0
+      isPPtrCurve: 0
+    - serializedVersion: 2
+      path: 1709004725
+      attribute: 2192174264
+      script: {fileID: 11500000, guid: 2496501012137cb4999ab5afc22d5f10, type: 3}
+      typeID: 114
+      customType: 0
+      isPPtrCurve: 0
+    - serializedVersion: 2
+      path: 1709004725
+      attribute: 298341484
+      script: {fileID: 11500000, guid: 2496501012137cb4999ab5afc22d5f10, type: 3}
+      typeID: 114
+      customType: 0
+      isPPtrCurve: 0
+    - serializedVersion: 2
+      path: 1709004725
+      attribute: 1910153881
+      script: {fileID: 11500000, guid: 2496501012137cb4999ab5afc22d5f10, type: 3}
+      typeID: 114
+      customType: 0
+      isPPtrCurve: 0
+    - serializedVersion: 2
+      path: 1709004725
+      attribute: 3906204451
+      script: {fileID: 11500000, guid: 2496501012137cb4999ab5afc22d5f10, type: 3}
+      typeID: 114
+      customType: 0
+      isPPtrCurve: 0
+    - serializedVersion: 2
+      path: 1709004725
+      attribute: 2681521077
+      script: {fileID: 11500000, guid: 2496501012137cb4999ab5afc22d5f10, type: 3}
+      typeID: 114
       customType: 0
       isPPtrCurve: 0
     pptrCurveMapping: []
@@ -334,6 +464,101 @@ AnimationClip:
     path: Hands/leftHand/Cube
     classID: 1
     script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 20
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: launchPower
+    path: Hands/leftHand/Cube
+    classID: 114
+    script: {fileID: 11500000, guid: 2496501012137cb4999ab5afc22d5f10, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: damage
+    path: Hands/leftHand/Cube
+    classID: 114
+    script: {fileID: 11500000, guid: 2496501012137cb4999ab5afc22d5f10, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: launchAngle.z
+    path: Hands/leftHand/Cube
+    classID: 114
+    script: {fileID: 11500000, guid: 2496501012137cb4999ab5afc22d5f10, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 2
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: launchAngle.y
+    path: Hands/leftHand/Cube
+    classID: 114
+    script: {fileID: 11500000, guid: 2496501012137cb4999ab5afc22d5f10, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: launchAngle.x
+    path: Hands/leftHand/Cube
+    classID: 114
+    script: {fileID: 11500000, guid: 2496501012137cb4999ab5afc22d5f10, type: 3}
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0

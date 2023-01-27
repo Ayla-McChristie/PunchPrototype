@@ -19,14 +19,21 @@ public class HitBox : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //may need to use custom physics for the desired bounces
-        other.attachedRigidbody.AddForce(launchAngle * launchPower);
         //do damage
-
+        if (other.GetComponent(typeof(IDamageable)) != null)
+        {
+            other.GetComponent<IDamageable>().TakeDamage(damage);
+        }
         //apply launch
-
+        if (other.GetComponent(typeof(ILaunchable)) != null)
+        {
+            other.GetComponent<ILaunchable>().ApplyLaunchForce(
+                (transform.forward * launchAngle.z) +
+                (transform.right * launchAngle.x) +
+                new Vector3(0, launchAngle.y, 0), launchPower);
+        }
         //camera effects
-        CameraUtility.Instance.ShakeCam();
+        //CameraUtility.Instance.ShakeCam();
         CameraUtility.Instance.HitPause(hitPauseDuration);
     }
 }

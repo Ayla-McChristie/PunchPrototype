@@ -4,10 +4,10 @@ using UnityEngine;
 
 public interface ILaunchable
 {
-    public Rigidbody Rigidbody { get; }
+    public CharacterController CharCont { get; }
     public float Mass { get; }
     public bool IsBeingLaunched { get; }
     public Vector3 ActiveVelocity { get; }
     public void UpdateLaunchDirection();
-    public void ApplyLaunchForce();
+    public void ApplyLaunchForce(Vector3 angle, float magnitude);
 }

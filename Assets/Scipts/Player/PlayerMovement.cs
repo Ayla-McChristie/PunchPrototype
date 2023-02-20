@@ -6,12 +6,16 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInput))]
 public class PlayerMovement : MonoBehaviour
 {
+    PlayerStateMachine ps;
     /*
      Input
      */
     [SerializeField]
     private InputActionReference movementVector, jump;
 
+    private CharacterController charController;
+    private Vector3 moveInput;
+    private Vector3 activeDashSpeed;
     /*
      Movement
      */
@@ -20,42 +24,34 @@ public class PlayerMovement : MonoBehaviour
     Vector3 activeMoveSpeed;
     public Vector3 ActiveMoveSpeed { get { return activeMoveSpeed; } }
     public float acceleration = 2f;
-    public float gravity = -10f;
-    public float jumpGrav = -5f;
-    public float jumpHeight = 2f;
 
+    [Header("Dashing")]
     public float dashDistance = 2f;
     public float dashDuration = .5f;
     public float dashFalloff = 1;
-
-
-    private CharacterController charController;
-    private Vector3 moveInput;
-    private Vector3 activeDashSpeed;
+    private bool canDash;
+    public float dashCooldown = 2;
+    private float dashCooldownTimestamp;
 
     /*
      Jumping
      */
     [Header("Jumping")]
-    public Transform groundCheck;
-    public float groundDistance = 0.4f;
-    public LayerMask groundMask;
+    public float gravity = -10f;
+    public float jumpGrav = -5f;
+    public float jumpHeight = 2f;
 
     private Vector3 vertVelocity;
-    private bool isGrounded;
 
     /*
      * State
      */
-    private bool isDashing;
-    private bool canDash;
-    public float dashCooldown = 2;
-    private float dashCooldownTimestamp;
 
     // Start is called before the first frame update
     void Start()
     {
         charController = GetComponent<CharacterController>();
+        ps = GetComponent<PlayerStateMachine>();
     }
 
     // Update is called once per frame
@@ -69,16 +65,14 @@ public class PlayerMovement : MonoBehaviour
             ).normalized;
 
         activeMoveSpeed = Vector3.Lerp(activeMoveSpeed, moveInput * speed, acceleration * Time.deltaTime);
+     
 
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-        //Debug.Log("grounded: " + isGrounded);
-
-        if (isGrounded && vertVelocity.y < 0)
+        if (ps.isGrounded && vertVelocity.y < 0)
         {
             vertVelocity.y = -2;
         }
 
-        if (!isDashing)
+        if (!ps.isDashing)
         {
             //this is a silly quick fix but if we wanna change the control scheme this will need to be done manually
             if (vertVelocity.y > 0 && Keyboard.current.spaceKey.isPressed)
@@ -106,7 +100,7 @@ public class PlayerMovement : MonoBehaviour
     {     
         if (callbackContext.performed && gameObject.scene.IsValid())
         {
-            if (isGrounded)
+            if (ps.isGrounded)
             {
                 vertVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
                 //vertVelocity.y = jumpHeight;
@@ -132,7 +126,7 @@ public class PlayerMovement : MonoBehaviour
             }
 
             vertVelocity = Vector3.zero;
-            isDashing = true;
+            ps.isDashing = true;
             canDash = false;
             dashCooldownTimestamp = Time.time + dashCooldown;
 
@@ -142,7 +136,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void ResetDash()
     {
-        isDashing = false;
-
+        ps.isDashing = false;
     }
 }

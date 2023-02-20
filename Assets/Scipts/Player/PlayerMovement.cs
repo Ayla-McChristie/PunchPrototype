@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     /*
      Movement
      */
+    [Header("Movement")]
     public float speed = 12f;
     Vector3 activeMoveSpeed;
     public Vector3 ActiveMoveSpeed { get { return activeMoveSpeed; } }
@@ -23,18 +24,33 @@ public class PlayerMovement : MonoBehaviour
     public float jumpGrav = -5f;
     public float jumpHeight = 2f;
 
+    public float dashDistance = 2f;
+    public float dashDuration = .5f;
+    public float dashFalloff = 1;
+
+
     private CharacterController charController;
+    private Vector3 moveInput;
+    private Vector3 activeDashSpeed;
 
     /*
      Jumping
      */
-
+    [Header("Jumping")]
     public Transform groundCheck;
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
 
     private Vector3 vertVelocity;
     private bool isGrounded;
+
+    /*
+     * State
+     */
+    private bool isDashing;
+    private bool canDash;
+    public float dashCooldown = 2;
+    private float dashCooldownTimestamp;
 
     // Start is called before the first frame update
     void Start()
@@ -47,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
     {
         var delta = movementVector.action.ReadValue<Vector2>();
 
-        Vector3 moveInput = (
+        moveInput = (
             transform.right * delta.x +
             transform.forward * delta.y
             ).normalized;
@@ -62,19 +78,29 @@ public class PlayerMovement : MonoBehaviour
             vertVelocity.y = -2;
         }
 
-        //this is a silly quick fix but if we wanna change the control scheme this will need to be done manually
-        if (vertVelocity.y > 0 && Keyboard.current.spaceKey.isPressed)
+        if (!isDashing)
         {
-            vertVelocity.y += jumpGrav * Time.deltaTime;
+            //this is a silly quick fix but if we wanna change the control scheme this will need to be done manually
+            if (vertVelocity.y > 0 && Keyboard.current.spaceKey.isPressed)
+            {
+                vertVelocity.y += jumpGrav * Time.deltaTime;
+            }
+            else
+            {
+                vertVelocity.y += gravity * Time.deltaTime;
+            }
         }
-        else
+
+        //move player by velocities
+        charController.Move((activeMoveSpeed + activeDashSpeed + vertVelocity) * Time.deltaTime);
+
+        //move the dash speed to 0
+        activeDashSpeed = Vector3.Lerp(activeDashSpeed, Vector3.zero, dashFalloff * Time.deltaTime);
+
+        if (Time.time > dashCooldownTimestamp && !canDash)
         {
-            vertVelocity.y += gravity * Time.deltaTime;
+            canDash = true;
         }
-
-
-        charController.Move((activeMoveSpeed + vertVelocity) * Time.deltaTime);
-
     }
     public void OnJump(InputAction.CallbackContext callbackContext)
     {     
@@ -91,5 +117,32 @@ public class PlayerMovement : MonoBehaviour
         {
             Debug.Log("Cant jump");
         }
+    }
+    public void OnDash(InputAction.CallbackContext callbackContext)
+    {
+        if (callbackContext.performed && canDash)
+        {
+            if (moveInput != Vector3.zero)
+            {
+                activeMoveSpeed += moveInput * (dashDistance/dashDuration);
+            }
+            else
+            {
+                activeMoveSpeed += transform.forward * (dashDistance/dashDuration);
+            }
+
+            vertVelocity = Vector3.zero;
+            isDashing = true;
+            canDash = false;
+            dashCooldownTimestamp = Time.time + dashCooldown;
+
+            Invoke(nameof(ResetDash),dashDuration);
+        }
+    }
+
+    private void ResetDash()
+    {
+        isDashing = false;
+
     }
 }

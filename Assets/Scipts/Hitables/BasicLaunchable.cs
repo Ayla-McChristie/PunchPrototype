@@ -2,19 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PunchinBag : MonoBehaviour, IDamageable, ILaunchable
+public class BasicLaunchable : BasicHitable, ILaunchable
 {
     bool isGrounded = false;
-    public Transform jawnCheck;
+    public Transform groundCheck;
     Vector3 groundCheckSize = new Vector3(.2f, .2f, .2f);
     [SerializeField]
     LayerMask groundMask;
-
-    /*
-     * IDamagable
-     */
-    ParticleSystem ps;
-    public float Health => 10;
 
     /*
      * ILaunchable
@@ -58,28 +52,7 @@ public class PunchinBag : MonoBehaviour, IDamageable, ILaunchable
         {
             //TakeDamage();
         }
-    }
-
-    public void TakeDamage()
-    {
-        TakeDamage(1f);
-    }
-
-    public void TakeDamage(float damageAmount)
-    {
-        PlayHitEffect();
-    }
-    public void Start()
-    {
-        ps = GetComponent<ParticleSystem>();
-    }
-
-    void PlayHitEffect()
-    {
-        ps.Clear();
-        ps.Stop();
-        ps.Play();
-    }
+    }   
 
     public void UpdateLaunchDirection()
     {

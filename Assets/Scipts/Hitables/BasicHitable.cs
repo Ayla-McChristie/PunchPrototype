@@ -23,7 +23,7 @@ public class BasicHitable : MonoBehaviour, IDamageable
 
     public void TakeDamage(float damageAmount)
     {
-        Health = Health-damageAmount;
+        //Health = Health-damageAmount;
         PlayHitEffect();
     }
 

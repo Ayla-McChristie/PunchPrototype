@@ -44,15 +44,7 @@ public class BasicLaunchable : BasicHitable, ILaunchable
         {
             ActiveVelocity +=new Vector3(0, gravity * Time.deltaTime, 0);
         }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.transform.tag == "PlayerHitBox")
-        {
-            //TakeDamage();
-        }
-    }   
+    } 
 
     public void UpdateLaunchDirection()
     {

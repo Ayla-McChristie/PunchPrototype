@@ -130,6 +130,10 @@ public class PlayerMovement : MonoBehaviour
             canDash = false;
             dashCooldownTimestamp = Time.time + dashCooldown;
 
+            /*
+             * TODO: View Bob
+             */
+
             Invoke(nameof(ResetDash),dashDuration);
         }
     }

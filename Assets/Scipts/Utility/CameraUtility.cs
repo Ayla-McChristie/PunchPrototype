@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using Unity.VisualScripting;
 
 public class CameraUtility : MonoBehaviour
 {
@@ -19,16 +20,26 @@ public class CameraUtility : MonoBehaviour
     float shakeTimerTotal;
     float startingIntesity;
 
+    /*
+     * ViewBob
+     */
+    float viewBobRate = 1f;
+    private bool bobbingToTarget = false;
+    private Vector3 bobbingTarget;
+    private Vector3 cameraRoot;
+
     private void Awake()
     {
         Instance = this;
         vcam = GetComponent<CinemachineVirtualCamera>();
+        cameraRoot = vcam.transform.localPosition;
     }
 
     // Update is called once per frame
     void Update()
     {
         //ResetScreenShake();
+        UpdateViewBob();
     }
     /*
      * Hit Pause
@@ -61,13 +72,13 @@ public class CameraUtility : MonoBehaviour
     }
     public void ShakeCam(float intensity, float time)
     {
-        //CinemachineBasicMultiChannelPerlin perlin = vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        CinemachineBasicMultiChannelPerlin perlin = vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
-        //perlin.m_AmplitudeGain = intensity;
-        //startingIntesity = intensity;
+        perlin.m_AmplitudeGain = intensity;
+        startingIntesity = intensity;
 
-        //shakeTimer = time;
-        //shakeTimerTotal = time;
+        shakeTimer = time;
+        shakeTimerTotal = time;
     }
     private void ResetScreenShake()
     {
@@ -85,6 +96,37 @@ public class CameraUtility : MonoBehaviour
         else if (vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain > 0)
         {
             vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 0f;
+        }
+    }
+    /*
+     * ViewBob UNSTABLE!!!!!
+     */
+
+    public void ViewBob()
+    {
+        ViewBob();
+    }
+    public void ViewBob(float depth)
+    {
+        bobbingToTarget = true;
+        bobbingTarget= this.transform.position+new Vector3 (0f, depth, 0f);
+        bobbingToTarget = true;
+    }
+
+    private void UpdateViewBob()
+    {
+        if (bobbingToTarget)
+        {
+            vcam.transform.localPosition = Vector3.Lerp(vcam.transform.position, bobbingTarget, viewBobRate); 
+        }
+        else
+        {
+            vcam.transform.localPosition = Vector3.Lerp(vcam.transform.position, cameraRoot, viewBobRate);
+        }
+
+        if (Vector3.Distance(cameraRoot, vcam.transform.position)<.05 && bobbingToTarget == true)
+        {
+            bobbingToTarget= false;
         }
     }
 }

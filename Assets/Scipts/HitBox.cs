@@ -8,6 +8,7 @@ public class HitBox : MonoBehaviour
     public float damage = 1;
     public float launchPower = 1;
     public Vector3 launchAngle = new Vector3(0,0,0);
+    public bool ExtendJump = false;
 
     public float hitPauseDuration = .2f;
 
@@ -16,24 +17,31 @@ public class HitBox : MonoBehaviour
         Collider c = GetComponent<Collider>();
         c.isTrigger = true;
     }
-
-    private void OnTriggerEnter(Collider other)
+    private void OnHit(Collider other)
     {
         //do damage
-        if (other.GetComponent(typeof(IDamageable)) != null)
+        IDamageable damagable = (IDamageable)other.GetComponent(typeof(IDamageable));
+        if (damagable != null)
         {
-            other.GetComponent<IDamageable>().TakeDamage(damage);
+            damagable.TakeDamage(damage);
         }
         //apply launch
-        if (other.GetComponent(typeof(ILaunchable)) != null)
+        ILaunchable launchable = (ILaunchable)other.GetComponent(typeof(ILaunchable));
+        if (launchable != null)
         {
-            other.GetComponent<ILaunchable>().ApplyLaunchForce(
+            launchable.ApplyLaunchForce(
                 (transform.forward * launchAngle.z) +
                 (transform.right * launchAngle.x) +
-                new Vector3(0, launchAngle.y, 0), launchPower);
+                new Vector3(0, launchAngle.y, 0), 
+                launchPower);
         }
         //camera effects
         //CameraUtility.Instance.ShakeCam();
         CameraUtility.Instance.HitPause(hitPauseDuration);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        OnHit(other);
     }
 }

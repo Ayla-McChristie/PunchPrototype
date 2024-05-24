@@ -29,7 +29,7 @@
                     "id": "32f92a04-b021-46da-8757-d927f7423f94",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Hold,MultiTap(tapDelay=0.2,tapCount=3)",
                     "initialStateCheck": false
                 },
                 {
@@ -45,6 +45,15 @@
                     "name": "Dash",
                     "type": "Button",
                     "id": "ada48abd-2c49-4ebd-b0cb-13513a4729f3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Block/Parry",
+                    "type": "Button",
+                    "id": "607dbc82-4452-486f-b7d2-1dc714383822",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -291,6 +300,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "18d6cb89-ab4e-4d34-bb36-2e70a19ef360",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Block/Parry",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

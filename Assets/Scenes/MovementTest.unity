@@ -406,7 +406,7 @@ GameObject:
   - component: {fileID: 586690729}
   - component: {fileID: 586690728}
   m_Layer: 5
-  m_Name: Image
+  m_Name: ChargeMeter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -430,7 +430,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &586690728
 MonoBehaviour:
@@ -452,8 +452,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 2aa0632a427281240af91882b90bfa93, type: 3}
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -5987,9 +5987,9 @@ RectTransform:
   m_Father: {fileID: 1996250201}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -206.93668, y: 213}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 223.06332, y: -29}
   m_SizeDelta: {x: 433.1266, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1481569224
@@ -6379,6 +6379,38 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6547916789341931390, guid: 5894fb302d0538040982bcc27bcc41c2, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6547916789341931390, guid: 5894fb302d0538040982bcc27bcc41c2, type: 3}
+      propertyPath: launchAngle.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6547916789341931390, guid: 5894fb302d0538040982bcc27bcc41c2, type: 3}
+      propertyPath: launchAngle.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6547916789341931390, guid: 5894fb302d0538040982bcc27bcc41c2, type: 3}
+      propertyPath: hitPauseDuration
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6547916789928503323, guid: 5894fb302d0538040982bcc27bcc41c2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.63
+      objectReference: {fileID: 0}
+    - target: {fileID: 6547916789928503323, guid: 5894fb302d0538040982bcc27bcc41c2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6547916790194384291, guid: 5894fb302d0538040982bcc27bcc41c2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.63
+      objectReference: {fileID: 0}
+    - target: {fileID: 6547916790194384291, guid: 5894fb302d0538040982bcc27bcc41c2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6547916790244062871, guid: 5894fb302d0538040982bcc27bcc41c2, type: 3}
       propertyPath: m_Name
       value: Player
@@ -6387,6 +6419,14 @@ PrefabInstance:
       propertyPath: textObject
       value: 
       objectReference: {fileID: 1481569220}
+    - target: {fileID: 6547916790244062880, guid: 5894fb302d0538040982bcc27bcc41c2, type: 3}
+      propertyPath: chargeWheel
+      value: 
+      objectReference: {fileID: 586690728}
+    - target: {fileID: 6547916790244062880, guid: 5894fb302d0538040982bcc27bcc41c2, type: 3}
+      propertyPath: chargeAttackRate
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6547916790244062888, guid: 5894fb302d0538040982bcc27bcc41c2, type: 3}
       propertyPath: m_RootOrder
       value: 3

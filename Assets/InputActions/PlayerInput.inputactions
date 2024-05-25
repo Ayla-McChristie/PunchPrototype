@@ -29,7 +29,7 @@
                     "id": "32f92a04-b021-46da-8757-d927f7423f94",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Hold,MultiTap(tapDelay=0.2,tapCount=3)",
+                    "interactions": "Hold,Tap",
                     "initialStateCheck": false
                 },
                 {

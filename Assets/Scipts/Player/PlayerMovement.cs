@@ -33,6 +33,8 @@ public class PlayerMovement : MonoBehaviour
     public float dashCooldown = 2;
     private float dashCooldownTimestamp;
 
+    float viewBobRate = .1f;
+
     /*
      Jumping
      */
@@ -65,8 +67,8 @@ public class PlayerMovement : MonoBehaviour
             ).normalized;
 
         activeMoveSpeed = Vector3.Lerp(activeMoveSpeed, moveInput * speed, acceleration * Time.deltaTime);
-     
 
+        //CameraUtility.Instance.ViewBob(activeMoveSpeed.magnitude*Time.deltaTime);
         if (ps.isGrounded && vertVelocity.y < 0)
         {
             vertVelocity.y = -2;

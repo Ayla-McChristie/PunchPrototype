@@ -76,7 +76,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 63
+  field of view: 63.14
   orthographic: 0
   orthographic size: 10
   m_Depth: -1
@@ -442,6 +442,8 @@ MonoBehaviour:
   damage: 1
   launchPower: 30
   launchAngle: {x: 0, y: 1, z: 0}
+  ExtendJump: 0
+  applyLaunch: 0
   hitPauseDuration: 0.1
 --- !u!1 &6547916789433486904
 GameObject:
@@ -653,6 +655,8 @@ MonoBehaviour:
   damage: 1
   launchPower: 30
   launchAngle: {x: 0, y: 1, z: 0}
+  ExtendJump: 0
+  applyLaunch: 0
   hitPauseDuration: 0.1
 --- !u!1 &6547916789928503322
 GameObject:
@@ -776,8 +780,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6547916790181124730}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.52, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.51999974, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -970,6 +974,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3579e7e92e606c64f84f71a65f907581, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chargeAttackRate: 0.1
+  rapidAttackWindow: 0.2
+  numOfClicks: 3
+  textObject: {fileID: 0}
+  chargeWheel: {fileID: 0}
 --- !u!114 &6547916790244062881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -983,7 +992,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundCheck: {fileID: 6547916789433486905}
-  groundDistance: 0.4
   groundMask:
     serializedVersion: 2
     m_Bits: 887
@@ -1202,6 +1210,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: ada48abd-2c49-4ebd-b0cb-13513a4729f3
     m_ActionName: Player/Dash[/Keyboard/shift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 607dbc82-4452-486f-b7d2-1dc714383822
+    m_ActionName: Player/Block/Parry[/Mouse/rightButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player

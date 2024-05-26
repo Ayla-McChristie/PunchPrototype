@@ -8,6 +8,12 @@ public class CameraUtility : MonoBehaviour
 {
     public static CameraUtility Instance { get; private set; }
     CinemachineVirtualCamera vcam;
+
+    /*
+     * Cinemachine componants
+     */
+    CinemachineBasicMultiChannelPerlin m_MultiChannelPerlin;
+
     /*
      * Hit Pause
      */
@@ -33,6 +39,7 @@ public class CameraUtility : MonoBehaviour
         Instance = this;
         vcam = GetComponent<CinemachineVirtualCamera>();
         cameraRoot = vcam.transform.localPosition;
+        m_MultiChannelPerlin = vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
     }
 
     // Update is called once per frame
@@ -104,13 +111,15 @@ public class CameraUtility : MonoBehaviour
 
     public void ViewBob()
     {
-        ViewBob();
+        ViewBob(1);
     }
     public void ViewBob(float depth)
     {
-        bobbingToTarget = true;
-        bobbingTarget= this.transform.position+new Vector3 (0f, depth, 0f);
-        bobbingToTarget = true;
+        if (m_MultiChannelPerlin != null)
+        {
+            m_MultiChannelPerlin.m_AmplitudeGain = depth;
+            m_MultiChannelPerlin.m_FrequencyGain = depth;
+        }
     }
 
     private void UpdateViewBob()

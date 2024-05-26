@@ -15,5 +15,6 @@ public class KeepHandsWithCamRot : MonoBehaviour
     void Update()
     {
         this.transform.rotation = Quaternion.Lerp(this.transform.rotation, mainCam.transform.rotation, rate * Time.deltaTime);
+        //this.transform.position = mainCam.transform.position;
     }
 }

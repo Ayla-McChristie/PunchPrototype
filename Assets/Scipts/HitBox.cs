@@ -46,6 +46,10 @@ public class HitBox : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        OnHit(other);
+
+        if (other.GetComponent(typeof(IDamageable)) != null)
+        {
+            OnHit(other);
+        }
     }
 }

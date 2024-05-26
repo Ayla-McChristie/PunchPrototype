@@ -16,6 +16,7 @@ public class BasicLaunchable : BasicHitable, ILaunchable
     public bool IsLaunched { get; private set; }
     public Vector3 ActiveVelocity { get; private set; }
 
+    float launchBounceSpeedReduction = .3f;
 
     /*
      * Launch Stun
@@ -29,7 +30,6 @@ public class BasicLaunchable : BasicHitable, ILaunchable
      */
     bool isGrounded = false;
     public Transform groundCheck;
-    Vector3 groundCheckSize = new Vector3(.2f, .2f, .2f);
     float groundDistance;
     [SerializeField]
     LayerMask groundMask;
@@ -58,24 +58,7 @@ public class BasicLaunchable : BasicHitable, ILaunchable
     public void Update()
     {
         //funny spin effect
-        if (IsLaunched)
-        {
-            Debug.Log("Active Velocity: " + ActiveVelocity.magnitude);
-            //Debug.Log("Active Velocity: " + ActiveVelocity.ToString());
-            //if (ActiveVelocity.magnitude < 15)
-            //{
-                this.gameObject.transform.Rotate(new Vector3(rotationScale * ActiveVelocity.magnitude * Time.deltaTime, 0, 0), Space.Self);
-            //}
-            //else
-            //{
-            //    this.gameObject.transform.Rotate(new Vector3(0, rotationScale * ActiveVelocity.magnitude * Time.deltaTime, 0), Space.Self);
-            //}
-                
-        }
-        else
-        {
-            this.gameObject.transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.y, 0));
-        }
+        ApplyLaunchSpin();
 
         //only check grounded if not in launch stun
         if (!isLaunchStunned)
@@ -97,6 +80,17 @@ public class BasicLaunchable : BasicHitable, ILaunchable
             renderer.material = defaultMat;
         }
     }
+    //Launch bounce calculations
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (IsLaunched)
+        {
+            float velocityMagnitude =ActiveVelocity.magnitude -  (ActiveVelocity.magnitude*launchBounceSpeedReduction);
+            Vector3 collisionPerpendicular = Vector3.Reflect(ActiveVelocity.normalized,hit.normal);
+            ActiveVelocity = collisionPerpendicular*velocityMagnitude;
+        }
+
+    }
     private void ApplyGravity(bool isOnGround)
     {
         if (isOnGround)
@@ -108,6 +102,28 @@ public class BasicLaunchable : BasicHitable, ILaunchable
             ActiveVelocity += new Vector3(0, gravity*Time.deltaTime, 0);
         }
     } 
+    
+    private void ApplyLaunchSpin()
+    {
+        if (IsLaunched)
+        {
+            Debug.Log("Active Velocity: " + ActiveVelocity.magnitude);
+            Debug.Log("Active Velocity: " + ActiveVelocity.ToString());
+            //if (ActiveVelocity.magnitude < 15)
+            //{
+                this.gameObject.transform.Rotate(new Vector3(rotationScale * ActiveVelocity.magnitude * Time.deltaTime, 0, 0), Space.Self);
+            //}
+            //else
+            //{
+            //    this.gameObject.transform.Rotate(new Vector3(0, rotationScale * ActiveVelocity.magnitude * Time.deltaTime, 0), Space.Self);
+            //}
+                
+        }
+        else
+        {
+            this.gameObject.transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.y, 0));
+        }
+    }
 
     //reduces horizontal launch forces and applies gravity
     private void HandleVelocityReduction()
@@ -174,5 +190,6 @@ public class BasicLaunchable : BasicHitable, ILaunchable
         //Debug.Log("is grounded: " + isGrounded);
         return isGrounded;
     }
-    
+
+
 }

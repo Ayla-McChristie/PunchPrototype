@@ -6,7 +6,7 @@ public class PlayerStateMachine : MonoBehaviour
 {
 
     public Transform groundCheck;
-    public float groundDistance = 0.4f;
+    float groundDistance = 0.4f;
     public LayerMask groundMask;
 
     public bool isGrounded;
@@ -21,6 +21,19 @@ public class PlayerStateMachine : MonoBehaviour
         Walking,
         Dashing,
         Airborne
+    }
+    enum AttackState
+    {
+        Idle,
+        RegularAttack,
+        ChargeAttack,
+        GrabAttack
+    }
+
+    enum HandState
+    {
+        Unarmed,
+        HoldingObject
     }
 
     private void HandleState()

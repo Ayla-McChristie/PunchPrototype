@@ -6,26 +6,11 @@ using UnityEngine.UI;
 
 public class PlayerAttack : MonoBehaviour
 {
-
-    enum AttackState
-    {
-        Idle,
-        RegularAttack,
-        ChargeAttack,
-        GrabAttack
-    }
-
-    enum HandStante
-    {
-        Unarmed,
-        HoldingObject
-    }
+    PlayerStateMachine playerStateMachine;
 
     private Animator anim;
 
     bool rightOrLeft = true;
-
-    AttackState attackState = AttackState.Idle;
 
     /*
      * Charge attack
@@ -58,6 +43,7 @@ public class PlayerAttack : MonoBehaviour
         anim = GetComponent<Animator>();
         InputAction action = new InputAction();
         debugText = textObject.GetComponent<TextMeshProUGUI>();
+        playerStateMachine = GetComponent<PlayerStateMachine>();
     }
     private void Update()
     {

@@ -4,47 +4,139 @@ using UnityEngine;
 
 public class BasicLaunchable : BasicHitable, ILaunchable
 {
-    bool isGrounded = false;
-    public Transform groundCheck;
-    Vector3 groundCheckSize = new Vector3(.2f, .2f, .2f);
-    [SerializeField]
-    LayerMask groundMask;
-
     /*
      * ILaunchable
      */
     [SerializeField]
-    float gravity = 2;
+    float gravity = -30;
     [SerializeField]
-    float launchForceFallOff = 1;
+    float launchForceFallOff = .2f;
     [SerializeField]
     public float Mass { get; private set; }   
-    public bool IsBeingLaunched { get; private set; }
+    public bool IsLaunched { get; private set; }
     public Vector3 ActiveVelocity { get; private set; }
 
+
+    /*
+     * Launch Stun
+     */
+    private bool isLaunchStunned;
+    private float launchStun = 1f;
+    private float launchStunTimeStamp;
+
+    /*
+     * Ground check
+     */
+    bool isGrounded = false;
+    public Transform groundCheck;
+    Vector3 groundCheckSize = new Vector3(.2f, .2f, .2f);
+    float groundDistance;
+    [SerializeField]
+    LayerMask groundMask;
+
+    /*
+     * Visual Feedback
+     */
+    [SerializeField]
+    public Material launchMat;
+    private Material defaultMat;
+    private Renderer renderer;
+
+    /*
+     * Launch Rotation
+     */
+    private float rotationScale = 60.0f;
+
     public CharacterController CharCont => GetComponent<CharacterController>();
+    private void Awake()
+    {
+        renderer = GetComponent<Renderer>();
+        defaultMat = renderer.material;
+        groundDistance = (GetComponent<CapsuleCollider>().height) + .1f;
+    }
 
     public void Update()
     {
-        isGrounded = CharCont.isGrounded;
+        //funny spin effect
+        if (IsLaunched)
+        {
+            Debug.Log("Active Velocity: " + ActiveVelocity.magnitude);
+            //Debug.Log("Active Velocity: " + ActiveVelocity.ToString());
+            //if (ActiveVelocity.magnitude < 15)
+            //{
+                this.gameObject.transform.Rotate(new Vector3(rotationScale * ActiveVelocity.magnitude * Time.deltaTime, 0, 0), Space.Self);
+            //}
+            //else
+            //{
+            //    this.gameObject.transform.Rotate(new Vector3(0, rotationScale * ActiveVelocity.magnitude * Time.deltaTime, 0), Space.Self);
+            //}
+                
+        }
+        else
+        {
+            this.gameObject.transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.y, 0));
+        }
 
-        ApplyGravity(isGrounded);
+        //only check grounded if not in launch stun
+        if (!isLaunchStunned)
+        {
+            GroundCheck();
+        }
+
+        //checks to see if launch stunn has passed
+        if (Time.time > launchStunTimeStamp && isLaunchStunned)
+        {
+            isLaunchStunned = false;
+        }
 
         CharCont.Move((ActiveVelocity) * Time.deltaTime);
+        HandleVelocityReduction();       
 
-        ActiveVelocity = Vector3.Lerp(ActiveVelocity, Vector3.zero, launchForceFallOff * Time.deltaTime);
+        if (isGrounded && renderer.material != defaultMat)
+        {
+            renderer.material = defaultMat;
+        }
     }
     private void ApplyGravity(bool isOnGround)
     {
         if (isOnGround)
         {
-            ActiveVelocity += new Vector3(0, -2, 0);
+            ActiveVelocity += new Vector3(0, -2*Time.deltaTime, 0);
         }
         else
         {
-            ActiveVelocity +=new Vector3(0, gravity * Time.deltaTime, 0);
+            ActiveVelocity += new Vector3(0, gravity*Time.deltaTime, 0);
         }
     } 
+
+    //reduces horizontal launch forces and applies gravity
+    private void HandleVelocityReduction()
+    {
+        float velX = ActiveVelocity.x;
+        float velZ = ActiveVelocity.z;
+
+        if (velX > 0)
+        {
+            velX -= velX * launchForceFallOff * Time.deltaTime;
+        }
+        else
+        {
+            velX -= velX * launchForceFallOff * Time.deltaTime;
+        }
+
+        if (velZ > 0)
+        {
+            velZ -= velZ * launchForceFallOff * Time.deltaTime;
+        }
+        else
+        {
+            velZ -= velZ * launchForceFallOff * Time.deltaTime;
+        }
+
+        ActiveVelocity = new Vector3(velX, ActiveVelocity.y, velZ);
+
+        ApplyGravity(isGrounded);
+    }
 
     public void UpdateLaunchDirection()
     {
@@ -53,6 +145,34 @@ public class BasicLaunchable : BasicHitable, ILaunchable
 
     public void ApplyLaunchForce(Vector3 angle, float magnitude)
     {
+        IsLaunched = true;
+        isLaunchStunned = true;
+        launchStunTimeStamp = Time.time + launchStun;
+        isGrounded = false;
         ActiveVelocity = angle.normalized * magnitude;
+
+        Debug.Log("Launched!");
+
+        if (launchMat != null)
+        {
+            renderer.material = launchMat;
+        }
     }
+    private bool GroundCheck()
+    {
+        RaycastHit hit;
+        Debug.DrawRay(transform.position, Vector3.down * groundDistance, Color.red,.1f,true);
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, groundDistance, groundMask))
+        {
+            isGrounded = true;
+            IsLaunched = false;
+        }
+        else
+        {
+            isGrounded = false;
+        }
+        //Debug.Log("is grounded: " + isGrounded);
+        return isGrounded;
+    }
+    
 }

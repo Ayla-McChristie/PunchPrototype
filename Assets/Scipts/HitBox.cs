@@ -9,6 +9,7 @@ public class HitBox : MonoBehaviour
     public float launchPower = 1;
     public Vector3 launchAngle = new Vector3(0,0,0);
     public bool ExtendJump = false;
+    public bool applyLaunch;
 
     public float hitPauseDuration = .2f;
 
@@ -27,7 +28,7 @@ public class HitBox : MonoBehaviour
         }
         //apply launch
         ILaunchable launchable = (ILaunchable)other.GetComponent(typeof(ILaunchable));
-        if (launchable != null)
+        if (launchable != null && applyLaunch == true)
         {
             launchable.ApplyLaunchForce(
                 (transform.forward * launchAngle.z) +
@@ -35,6 +36,9 @@ public class HitBox : MonoBehaviour
                 new Vector3(0, launchAngle.y, 0), 
                 launchPower);
         }
+
+        //make object hit face toward the collision
+        other.gameObject.transform.LookAt(this.gameObject.transform);
         //camera effects
         //CameraUtility.Instance.ShakeCam();
         CameraUtility.Instance.HitPause(hitPauseDuration);

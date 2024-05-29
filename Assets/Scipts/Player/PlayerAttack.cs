@@ -15,6 +15,7 @@ public class PlayerAttack : MonoBehaviour
     /*
      * Charge attack
      */
+    [Header("Charge Attack")]
     [SerializeField]
     private float chargeAttackRate = .1f;
     private float chargeAttackCurrentCharge = 0f;
@@ -23,6 +24,7 @@ public class PlayerAttack : MonoBehaviour
     /*
      * Rapid attack
      */
+    [Header("Rapid Attack")]
     [SerializeField]
     private float rapidAttackWindow = .2f;
     [SerializeField]
@@ -31,8 +33,15 @@ public class PlayerAttack : MonoBehaviour
     private bool isRapidAttacking;
 
     /*
+     * Grab
+     */
+    private bool isGrabbingSomething = false;
+    private 
+
+    /*
      * Debug 
      */
+    [Header("Debug")]
     public GameObject textObject;
     private TextMeshProUGUI debugText;
     public Image chargeWheel;
@@ -110,6 +119,31 @@ public class PlayerAttack : MonoBehaviour
                 {
                     debugText.text = "Attack State: Charge Punch Cancelled";
                 }         
+            }
+        }
+    }
+
+    public void OnGrab(InputAction.CallbackContext callbackContext)
+    {
+        if (isGrabbingSomething)
+        {
+            if (callbackContext.performed)
+            {
+                if (callbackContext.interaction is HoldInteraction)
+                {
+
+                }
+                if (callbackContext.interaction is TapInteraction)
+                {
+
+                }
+            }
+        }
+        else
+        {
+            if (callbackContext.performed)
+            {
+                
             }
         }
     }

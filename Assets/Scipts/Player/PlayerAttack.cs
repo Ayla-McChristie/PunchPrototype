@@ -36,7 +36,6 @@ public class PlayerAttack : MonoBehaviour
      * Grab
      */
     private bool isGrabbingSomething = false;
-    private 
 
     /*
      * Debug 

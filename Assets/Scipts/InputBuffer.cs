@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class InputBuffer : MonoBehaviour
 {
-    Queue<InputBufferItem> buffer;
+    Queue<IInputBufferAction> buffer;
 
     public void UpdateInputBuffer()
     {
 
-        foreach (InputBufferItem c in buffer)
+        foreach (IInputBufferAction c in buffer)
         {
             c.ResolveAction();
         }
